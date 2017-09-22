@@ -1,6 +1,8 @@
 package com.tyrenwilliam.lexer;
 
 public class Lexer {
-//dummy code
+public static void main(String[] args){
+	System.out.println("practice");
+}
 	
 }
