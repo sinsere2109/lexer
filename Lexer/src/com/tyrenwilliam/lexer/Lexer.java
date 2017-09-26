@@ -1,5 +1,9 @@
 package com.tyrenwilliam.lexer;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -15,8 +19,13 @@ static int lineCount=1;
  static String str="";
 
 
-public Lexer(String s){
+public Lexer(String fileName) throws IOException{
 	
+
+FileReader file = new FileReader(new File(fileName));	
+BufferedReader read = new BufferedReader(file);
+String s=null;
+while((s= read.readLine()) != null){
 for(int i =0; i<s.length();++i)
 {
 	
@@ -155,7 +164,9 @@ for(int i =0; i<s.length();++i)
 		break;
 	}
 }
-	lineCount +=1;
+
+}
+lineCount +=1;
 }
 
 
@@ -313,7 +324,7 @@ public static void print(){
 	else if(type=="float"){
 		System.out.print("float= "+token );
 	}
-
+System.out.println();
 }
 
 
