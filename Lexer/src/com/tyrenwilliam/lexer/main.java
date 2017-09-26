@@ -5,7 +5,7 @@ public class main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		String s="hello hey";
+		String s="12 14 15";
 		Lexer lex = new Lexer(s);
 		
 	}
