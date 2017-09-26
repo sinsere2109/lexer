@@ -63,7 +63,7 @@ for(int i =0; i< s.length()-1;++i)
 	}
 
 		//Test for Unpaired delimiters
-	if(isUnpairedDelimiters(c)){
+	if(isUnpairedDelimeters(c)){
 		token=Character.toString(c);
 		setTokenId();
 		print();
@@ -98,7 +98,7 @@ for(int i =0; i< s.length()-1;++i)
 	// test for integer
 	else if(Character.isDigit(c)){
 		str +=c;
-		type="interger";
+		type="integer";
 		while(Character.isDigit(c2)){
 			++i;
 			c=s.charAt(i);
@@ -129,19 +129,10 @@ for(int i =0; i< s.length()-1;++i)
 
 	else if(Character.isAlphabetic(c)){
 		str+= c;
-		boolean willBreak = false;
 		while(Character.isAlphabetic(c) || Character.isDigit(c)){
 			i++;
 			c=s.charAt(i);
-			if(i+1 >= s.length()+1 )
-			{
-				willBreak = true;
-			}
 			c2=s.charAt(i+1);
-			if(willBreak)
-			{
-				break;
-			}
 			str +=c;
 		}
 		if(isKeyword(str)){
@@ -332,7 +323,7 @@ public boolean isComment(char c1, char c2) {
 	return((c1=='/') && (c2=='/'));
 }
 
-public boolean isUnpairedDelimiters(char c) {
+public boolean isUnpairedDelimeters(char c) {
 	return (c==',' || c == ';' );
 	
 }
