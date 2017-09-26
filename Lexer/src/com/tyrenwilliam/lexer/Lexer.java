@@ -26,9 +26,8 @@ FileReader file = new FileReader(new File(fileName));
 BufferedReader read = new BufferedReader(file);
 String s=null;
 while((s= read.readLine()) != null){
-for(int i =0; i<s.length();++i)
+for(int i =0; i<s.length()-1;++i)
 {
-	
 	char c=s.charAt(i);
 	char c2=s.charAt(i+1);
 	
@@ -139,7 +138,7 @@ for(int i =0; i<s.length();++i)
 	else if(Character.isAlphabetic(c)){
 		str+= c;
 
-		while(Character.isAlphabetic(c) || Character.isDigit(c)){
+		while(Character.isAlphabetic(c2) || Character.isDigit(c2)){
 			i++;
 			c=s.charAt(i);
 			c2=s.charAt(i+1);
@@ -160,13 +159,13 @@ for(int i =0; i<s.length();++i)
 			reset();
 		}
 	}
-	else{
-		break;
-	}
+	
 }
-
+	lineCount +=1;
 }
-lineCount +=1;
+	idNum = 0;
+		lineCount -= 2;
+		print();
 }
 
 
