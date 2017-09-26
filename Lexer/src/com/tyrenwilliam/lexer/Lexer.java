@@ -17,7 +17,7 @@ static int lineCount=1;
 
 public Lexer(String s){
 	
-for(int i =0; i< s.length()-1;++i)
+for(int i =0; i<s.length();++i)
 {
 	
 	char c=s.charAt(i);
@@ -26,6 +26,7 @@ for(int i =0; i< s.length()-1;++i)
 	if(c==' '){
 		continue;
 	}
+	
 	//String test
 	if(c== '"')
 	{
@@ -37,8 +38,7 @@ for(int i =0; i< s.length()-1;++i)
 		
 		c=s.charAt(i);
 		c2=s.charAt(i+1);
-		if(c == '"')
-			continue;
+		if(c == '"') continue;
 		str +=c;
 		++i;
 		}
@@ -129,10 +129,12 @@ for(int i =0; i< s.length()-1;++i)
 
 	else if(Character.isAlphabetic(c)){
 		str+= c;
+
 		while(Character.isAlphabetic(c) || Character.isDigit(c)){
 			i++;
 			c=s.charAt(i);
 			c2=s.charAt(i+1);
+
 			str +=c;
 		}
 		if(isKeyword(str)){
@@ -171,127 +173,127 @@ public static void setTokenId(){
 	if(type.equals("string")){
 		idNum=5;
 	}
-	if(type.equals(",")){
+	if(token.equals(",")){
 		idNum=6;
 	}
-	if(type.equals(";")){
+	if(token.equals(";")){
 		idNum=7;
 	}
-	if(type.equals("prog")){
+	if(token.equals("prog")){
 		idNum=10;
 	}
-	if(type.equals("prog")){
+	if(token.equals("prog")){
 		idNum=10;
 	}
-	if(type.equals("main")){
+	if(token.equals("main")){
 		idNum=11;
 	}
-	if(type.equals("fcn")){
+	if(token.equals("fcn")){
 		idNum=12;
 	}
-	if(type.equals("class")){
+	if(token.equals("class")){
 		idNum=13;
 	}
-	if(type.equals("float")){
+	if(token.equals("float")){
 		idNum=15;
 	}
-	if(type.equals("int")){
+	if(token.equals("int")){
 		idNum=16;
 	}
-	if(type.equals("string")){
+	if(token.equals("string")){
 		idNum=17;
 	}
-	if(type.equals("if")){
+	if(token.equals("if")){
 		idNum=18;
 	}
-	if(type.equals("elseif")){
+	if(token.equals("elseif")){
 		idNum=19;
 	}
-	if(type.equals("else")){
+	if(token.equals("else")){
 		idNum=20;
 	}
-	if(type.equals("while")){
+	if(token.equals("while")){
 		idNum=21;
 	}
-	if(type.equals("input")){
+	if(token.equals("input")){
 		idNum=22;
 	}
-	if(type.equals("print")){
+	if(token.equals("print")){
 		idNum=23;
 	}
-	if(type.equals("new")){
+	if(token.equals("new")){
 		idNum=24;
 	}
-	if(type.equals("return")){
+	if(token.equals("return")){
 		idNum=25;
 	}
-	if(type.equals("<")){
+	if(token.equals("<")){
 		idNum=31;
 	}
-	if(type.equals(">")){
+	if(token.equals(">")){
 		idNum=32;
 	}
-	if(type.equals("{")){
+	if(token.equals("{")){
 		idNum=33;
 	}
-	if(type.equals("}")){
+	if(token.equals("}")){
 		idNum=34;
 	}
-	if(type.equals("[")){
+	if(token.equals("[")){
 		idNum=35;
 	}
-	if(type.equals("]")){
+	if(token.equals("]")){
 		idNum=36;
 	}
-	if(type.equals("(")){
+	if(token.equals("(")){
 		idNum=37;
 	}
-	if(type.equals(")")){
+	if(token.equals(")")){
 		idNum=38;
 	}
-	if(type.equals("*")){
+	if(token.equals("*")){
 		idNum=41;
 	}
-	if(type.equals("^")){
+	if(token.equals("^")){
 		idNum=42;
 	}
-	if(type.equals(":")){
+	if(token.equals(":")){
 		idNum=43;
 	}
-	if(type.equals(".")){
+	if(token.equals(".")){
 		idNum=44;
 	}
-	if(type.equals("=")){
+	if(token.equals("=")){
 		idNum=45;
 	}
-	if(type.equals("-")){
+	if(token.equals("-")){
 		idNum=46;
 	}
-	if(type.equals("+")){
+	if(token.equals("+")){
 		idNum=47;
 	}
-	if(type.equals("/")){
+	if(token.equals("/")){
 		idNum=48;
 	}
-	if(type.equals(">")){
+	if(token.equals(">")){
 		idNum=51;
 	}
-	if(type.equals("==")){
+	if(token.equals("==")){
 		idNum=52;
 	}
-	if(type.equals("!=")){
+	if(token.equals("!=")){
 		idNum=53;
 	}
-	if(type.equals("<=")){
+	if(token.equals("<=")){
 		idNum=54;
 	}
-	if(type.equals(">=")){
+	if(token.equals(">=")){
 		idNum=55;
 	}
-	if(type.equals("<<")){
+	if(token.equals("<<")){
 		idNum=56;
 	}
-	if(type.equals(">>")){
+	if(token.equals(">>")){
 		idNum=57;
 	}
 	if(type.equals("error")){
@@ -307,7 +309,7 @@ public static void setTokenId(){
 public static void print(){
 
 	
-	System.out.println("Tok:  "+idNum+" line =" +lineCount+ "str ="+token+ " ");
+	System.out.println("Tok: "+idNum+" line= " +lineCount+ " str= "+token+ " ");
 	if(type=="integer"){
 		System.out.print("int= "+token );
 	}

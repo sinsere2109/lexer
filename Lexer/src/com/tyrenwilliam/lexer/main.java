@@ -16,10 +16,9 @@ public class main {
 		try {
 		    StringBuilder sb = new StringBuilder();
 		    String line = br.readLine();
-
 		    while (line != null) {
 		        sb.append(line);
-		        sb.append(System.lineSeparator());
+		        sb.append("\n");
 		        line = br.readLine();
 		    }
 		    everything = sb.toString();
@@ -29,6 +28,7 @@ public class main {
 		}
 		System.out.println(everything);
 		Lexer lex = new Lexer(everything);
+
 		
 	}
 
