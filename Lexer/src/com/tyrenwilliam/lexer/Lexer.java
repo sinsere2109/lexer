@@ -6,15 +6,202 @@ import java.util.regex.Matcher;
 
 
 public class Lexer {
-
- static String line;
+static String line;
  static int idNum;
 static int lineCount=1;
  static String type;
  static String token;
-//testing123
+ static String str;
 
-public static void setTokenId(){
+
+public Lexer(String s){
+	
+for(int i =0; i< s.length()-1;++i)
+{
+	
+	char c=s.charAt(i);
+	char c2=s.charAt(i+1);
+	
+	if(c==' '){
+		continue;
+}
+//String test
+	if(c== '"')
+	{
+		
+		++i;
+		c= s.charAt(i);
+		c2=s.charAt(i+1);
+	while(!(c == '"')){
+		
+		c=s.charAt(i);
+		c2=s.charAt(i+1);
+		if(c == '"')
+			continue;
+		str +=c;
+		++i;
+		}
+	token=str;
+	type="string";
+	setTokenId();
+	print();
+	reset();
+	}
+	
+	//Multi char test
+	if(isMultiCharOperator(c,c2))
+	{
+		
+		token=Character.toString(c);
+		token += c2;
+		type="multicharoperator";
+		setTokenId();
+		print();
+		++i;
+		reset();
+	}
+
+		//Test for Unpaired delimiters
+	if(isUnpairedDelimiters(c)){
+		token=Character.toString(c);
+		setTokenId();
+		print();
+		reset();
+		continue;
+	}
+	else if(isPairedDelimeter(c)){
+		token=Character.toString(c);
+		type = "delimeter";
+		setTokenId();
+		print();
+		reset();
+	}
+	
+	else if(isPunctuation(c)){
+		if(isComment(c,c2)){
+			break;
+		}
+		else {
+			if(c2 == ' '){
+				token = Character.toString(c);
+				type= "punctuation";
+				setTokenId();
+				print();
+				
+				}
+			reset();
+			
+		}
+		
+	}
+	// test for integer
+	else if(Character.isDigit(c)){
+		str +=c;
+		type="interger";
+		while(Character.isDigit(c2)){
+			++i;
+			c=s.charAt(i);
+			c2=s.charAt(i+1);
+			str +=c;
+		}
+		if( c2 == '.'){
+			++i;
+			c=s.charAt(i);
+			c2=s.charAt(i+1);
+			str +=c;
+			type="float";
+			while(Character.isDigit(c2)){
+				++i;
+				c=s.charAt(i);
+				c2=s.charAt(i+1);
+				str +=c;
+			}
+			
+			
+		}
+	
+	token=str;
+	setTokenId();
+	print();
+	reset();
+	}
+
+	else if(Character.isAlphabetic(c)){
+		str+= c;
+		while(Character.isAlphabetic(c) || Character.isDigit(c)){
+			i++;
+			c=s.charAt(i);
+			c2=s.charAt(i+1);
+			str +=c;
+		}
+		if(isKeyword(str)){
+			token=str;
+			setTokenId();
+			print();
+			reset();
+		}
+		else{
+			type="identifier";
+			token=str;
+			setTokenId();
+			print();
+			reset();
+		}
+	
+	
+	
+	}
+
+
+}
+	lineCount +=1;
+	
+}
+
+ 
+public boolean isComment(char c1, char c2) {
+	return((c1=='/') && (c2=='/'));
+}
+
+public boolean isUnpairedDelimiters(char c) {
+	return (c==',' || c == ';' );
+	
+}
+
+public boolean isPunctuation(char c) {
+	return (c=='*' || c== '^' || c == ':' || c == '.' || c == '=' || c == '-' || c == '+' || c == '/' );
+}
+
+public boolean isPairedDelimeter(char c) {
+	return (c=='<' || c=='>' || c=='{' || c=='}' || c=='[' || c==']' || c =='(' || c==')');
+}
+
+public boolean isMultiCharOperator(char c1, char c2) {
+	return( (c1 == '-' && c2 == '>') || (c1 == '=' && c2 == '=') || (c1 == '!' && c2 == '=')
+			|| (c1 == '<' && c2 == '=') || (c1 == '>' && c2 == '=') || (c1 == '<' && c2 == '<')
+			|| (c1 == '>' && c2 == '>'));
+}
+
+public boolean isKeyword(String word) {
+	return (word =="prog" || word == "fcn" || word == "class" || word == "float" || word == "int" || word == "string"
+			|| word == "if" || word == "elseif" || word == "else" || word =="while" || word =="input"
+			|| word == "input" ||  word == "print");
+}
+
+
+
+
+
+ 
+ public static void reset(){
+	 idNum=0;
+	 type="";
+	 str="";
+	 type="";
+	 
+ }
+ 
+ public static void setTokenId(){
 	
 	if(type.equals("identifier")){
 		idNum=2;
