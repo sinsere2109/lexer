@@ -303,17 +303,14 @@ public static void setTokenId(){
 	}
 																										
 																																																						
-	
-	
-	
 }
 
 public static void print(){
 
 	
-	System.out.println("Tok: "+idNum+" line= " +lineCount+ " str= "+token+ " ");
+	System.out.print("Tok: "+idNum+" line= " +lineCount+ " str= "+token+ " ");
 	if(type=="integer"){
-		System.out.print("int= "+token );
+		System.out.println("int= "+token );
 	}
 	else if(type=="float"){
 		System.out.print("float= "+token );
