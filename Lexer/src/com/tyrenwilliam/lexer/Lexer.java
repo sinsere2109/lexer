@@ -7,17 +7,12 @@ import java.util.regex.Matcher;
 
 public class Lexer {
 
-static String line;
-
-
-
-
  static int idNum;
 static int lineCount=1;
  static String type;
  static String token;
 
- static String str;
+ static String str="";
 
 
 public Lexer(String s){
@@ -30,8 +25,8 @@ for(int i =0; i< s.length()-1;++i)
 	
 	if(c==' '){
 		continue;
-}
-//String test
+	}
+	//String test
 	if(c== '"')
 	{
 		
@@ -134,10 +129,19 @@ for(int i =0; i< s.length()-1;++i)
 
 	else if(Character.isAlphabetic(c)){
 		str+= c;
+		boolean willBreak = false;
 		while(Character.isAlphabetic(c) || Character.isDigit(c)){
 			i++;
 			c=s.charAt(i);
+			if(i+1 >= s.length()+1 )
+			{
+				willBreak = true;
+			}
 			c2=s.charAt(i+1);
+			if(willBreak)
+			{
+				break;
+			}
 			str +=c;
 		}
 		if(isKeyword(str)){
@@ -153,12 +157,10 @@ for(int i =0; i< s.length()-1;++i)
 			print();
 			reset();
 		}
-	
-	
-	
 	}
-
-
+	else{
+		break;
+	}
 }
 	lineCount +=1;
 }
@@ -314,7 +316,7 @@ public static void setTokenId(){
 public static void print(){
 
 	
-	System.out.println("Tok:  "+idNum+" line =" +line+ "str ="+token+ " ");
+	System.out.println("Tok:  "+idNum+" line =" +lineCount+ "str ="+token+ " ");
 	if(type=="integer"){
 		System.out.print("int= "+token );
 	}
