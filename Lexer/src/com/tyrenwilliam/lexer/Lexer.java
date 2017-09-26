@@ -6,11 +6,17 @@ import java.util.regex.Matcher;
 
 
 public class Lexer {
+
 static String line;
+
+
+
+
  static int idNum;
 static int lineCount=1;
  static String type;
  static String token;
+
  static String str;
 
 
@@ -155,53 +161,10 @@ for(int i =0; i< s.length()-1;++i)
 
 }
 	lineCount +=1;
-	
-}
-
- 
-public boolean isComment(char c1, char c2) {
-	return((c1=='/') && (c2=='/'));
-}
-
-public boolean isUnpairedDelimiters(char c) {
-	return (c==',' || c == ';' );
-	
-}
-
-public boolean isPunctuation(char c) {
-	return (c=='*' || c== '^' || c == ':' || c == '.' || c == '=' || c == '-' || c == '+' || c == '/' );
-}
-
-public boolean isPairedDelimeter(char c) {
-	return (c=='<' || c=='>' || c=='{' || c=='}' || c=='[' || c==']' || c =='(' || c==')');
-}
-
-public boolean isMultiCharOperator(char c1, char c2) {
-	return( (c1 == '-' && c2 == '>') || (c1 == '=' && c2 == '=') || (c1 == '!' && c2 == '=')
-			|| (c1 == '<' && c2 == '=') || (c1 == '>' && c2 == '=') || (c1 == '<' && c2 == '<')
-			|| (c1 == '>' && c2 == '>'));
-}
-
-public boolean isKeyword(String word) {
-	return (word =="prog" || word == "fcn" || word == "class" || word == "float" || word == "int" || word == "string"
-			|| word == "if" || word == "elseif" || word == "else" || word =="while" || word =="input"
-			|| word == "input" ||  word == "print");
 }
 
 
-
-
-
- 
- public static void reset(){
-	 idNum=0;
-	 type="";
-	 str="";
-	 type="";
-	 
- }
- 
- public static void setTokenId(){
+public static void setTokenId(){
 	
 	if(type.equals("identifier")){
 		idNum=2;
@@ -349,6 +312,7 @@ public boolean isKeyword(String word) {
 }
 
 public static void print(){
+
 	
 	System.out.println("Tok:  "+idNum+" line =" +line+ "str ="+token+ " ");
 	if(type=="integer"){
@@ -359,7 +323,54 @@ public static void print(){
 	}
 
 }
+
+
+ 
+public boolean isComment(char c1, char c2) {
+	return((c1=='/') && (c2=='/'));
+}
+
+public boolean isUnpairedDelimiters(char c) {
+	return (c==',' || c == ';' );
 	
+}
+
+public boolean isPunctuation(char c) {
+	return (c=='*' || c== '^' || c == ':' || c == '.' || c == '=' || c == '-' || c == '+' || c == '/' );
+}
+
+public boolean isPairedDelimeter(char c) {
+	return (c=='<' || c=='>' || c=='{' || c=='}' || c=='[' || c==']' || c =='(' || c==')');
+}
+
+public boolean isMultiCharOperator(char c1, char c2) {
+	return( (c1 == '-' && c2 == '>') || (c1 == '=' && c2 == '=') || (c1 == '!' && c2 == '=')
+			|| (c1 == '<' && c2 == '=') || (c1 == '>' && c2 == '=') || (c1 == '<' && c2 == '<')
+			|| (c1 == '>' && c2 == '>'));
+}
+
+public boolean isKeyword(String word) {
+	return (word =="prog" || word == "fcn" || word == "class" || word == "float" || word == "int" || word == "string"
+			|| word == "if" || word == "elseif" || word == "else" || word =="while" || word =="input"
+			|| word == "input" ||  word == "print");
+}
+
+
+
+
+
+ 
+ public static void reset(){
+	 idNum=0;
+	 type="";
+	 str="";
+	 type="";
+	 
+ }
+ 
+ 
+
+
 
 
 	
@@ -381,4 +392,4 @@ public static void print(){
 
 }
 
-  
+
