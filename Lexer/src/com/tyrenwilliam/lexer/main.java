@@ -9,12 +9,11 @@ import java.util.Scanner;
 public class main {
 
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		System.out.println("Enter file name");
+		System.out.println("Enter file name"); //take in user input
 		System.out.println("Hint: example.txt");
 		Scanner reader = new Scanner(System.in);  // Reading from System.in
 		String line = reader.nextLine();
-		Lexer lex = new Lexer(line);	
+		Lexer lex = new Lexer(line);	//passing file to lexer
 	}
 
 }
