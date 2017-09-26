@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -11,43 +12,41 @@ import java.util.regex.Matcher;
 
 public class Lexer {
 
- static int idNum;
+static int idNum;
 static int lineCount=1;
- static String type;
- static String token;
-
- static String str="";
-
-
+static String type;
+static String token;
+static String str="";
+static PrintWriter writer=null;
 public Lexer(String fileName) throws IOException{
 	
-
+writer = new PrintWriter("output"+fileName,"UTF-8");
 FileReader file = new FileReader(new File(fileName));	
 BufferedReader read = new BufferedReader(file);
 String s=null;
 while((s= read.readLine()) != null){
 for(int i =0; i<s.length()-1;++i)
 {
-	char c=s.charAt(i);
-	char c2=s.charAt(i+1);
+	char char1=s.charAt(i);
+	char char2=s.charAt(i+1);
 	
-	if(c==' '){
+	if(char1==' '){
 		continue;
 	}
 	
 	//String test
-	if(c== '"')
+	if(char1== '"')
 	{
 		
 		++i;
-		c= s.charAt(i);
-		c2=s.charAt(i+1);
-	while(!(c == '"')){
+		char1= s.charAt(i);
+		char2=s.charAt(i+1);
+	while(!(char1 == '"')){
 		
-		c=s.charAt(i);
-		c2=s.charAt(i+1);
-		if(c == '"') continue;
-		str +=c;
+		char1=s.charAt(i);
+		char2=s.charAt(i+1);
+		if(char1 == '"') continue;
+		str +=char1;
 		++i;
 		}
 	token=str;
@@ -58,11 +57,11 @@ for(int i =0; i<s.length()-1;++i)
 	}
 	
 	//Multi char test
-	if(isMultiCharOperator(c,c2))
+	if(isMultiCharOperator(char1,char2))
 	{
 		
-		token=Character.toString(c);
-		token += c2;
+		token=Character.toString(char1);
+		token += char2;
 		type="multicharoperator";
 		setTokenId();
 		print();
@@ -71,28 +70,28 @@ for(int i =0; i<s.length()-1;++i)
 	}
 
 		//Test for Unpaired delimiters
-	if(isUnpairedDelimeters(c)){
-		token=Character.toString(c);
+	if(isUnpairedDelimeters(char1)){
+		token=Character.toString(char1);
 		setTokenId();
 		print();
 		reset();
 		continue;
 	}
-	else if(isPairedDelimeter(c)){
-		token=Character.toString(c);
+	else if(isPairedDelimeter(char1)){
+		token=Character.toString(char1);
 		type = "delimeter";
 		setTokenId();
 		print();
 		reset();
 	}
 	
-	else if(isPunctuation(c)){
-		if(isComment(c,c2)){
+	else if(isPunctuation(char1)){
+		if(char1 =='/' || char2=='/' ){
 			break;
 		}
 		else {
-			if(c2 == ' '){
-				token = Character.toString(c);
+			if(char2 == ' '){
+				token = Character.toString(char1);
 				type= "punctuation";
 				setTokenId();
 				print();
@@ -104,26 +103,26 @@ for(int i =0; i<s.length()-1;++i)
 		
 	}
 	// test for integer
-	else if(Character.isDigit(c)){
-		str +=c;
+	else if(Character.isDigit(char1)){
+		str +=char1;
 		type="integer";
-		while(Character.isDigit(c2)){
+		while(Character.isDigit(char2)){
 			++i;
-			c=s.charAt(i);
-			c2=s.charAt(i+1);
-			str +=c;
+			char1=s.charAt(i);
+			char2=s.charAt(i+1);
+			str +=char1;
 		}
-		if( c2 == '.'){
+		if( char2 == '.'){
 			++i;
-			c=s.charAt(i);
-			c2=s.charAt(i+1);
-			str +=c;
+			char1=s.charAt(i);
+			char2=s.charAt(i+1);
+			str +=char1;
 			type="float";
-			while(Character.isDigit(c2)){
+			while(Character.isDigit(char2)){
 				++i;
-				c=s.charAt(i);
-				c2=s.charAt(i+1);
-				str +=c;
+				char1=s.charAt(i);
+				char2=s.charAt(i+1);
+				str +=char1;
 			}
 			
 			
@@ -135,15 +134,15 @@ for(int i =0; i<s.length()-1;++i)
 	reset();
 	}
 
-	else if(Character.isAlphabetic(c)){
-		str+= c;
+	else if(Character.isAlphabetic(char1)){
+		str+= char1;
 
-		while(Character.isAlphabetic(c2) || Character.isDigit(c2)){
+		while(Character.isAlphabetic(char2) || Character.isDigit(char2)){
 			i++;
-			c=s.charAt(i);
-			c2=s.charAt(i+1);
+			char1=s.charAt(i);
+			char2=s.charAt(i+1);
 
-			str +=c;
+			str +=char1;
 		}
 		if(isKeyword(str)){
 			token=str;
@@ -166,6 +165,7 @@ for(int i =0; i<s.length()-1;++i)
 	idNum = 0;
 		lineCount -= 2;
 		print();
+		writer.close();
 }
 
 
@@ -314,41 +314,37 @@ public static void setTokenId(){
 }
 
 public static void print(){
-
 	
 	System.out.print("Tok: "+idNum+" line= " +lineCount+ " str= "+token+ " ");
+	writer.println("Tok: "+idNum+" line= " +lineCount+ " str= "+token+ " ");
 	if(type=="integer"){
 		System.out.println("int= "+token );
+		writer.println("int= "+token );
 	}
 	else if(type=="float"){
 		System.out.print("float= "+token );
+		writer.println("float= "+token );
 	}
 System.out.println();
+
 }
-
-
- 
-public boolean isComment(char c1, char c2) {
-	return((c1=='/') && (c2=='/'));
-}
-
-public boolean isUnpairedDelimeters(char c) {
-	return (c==',' || c == ';' );
+public boolean isUnpairedDelimeters(char char1) {
+	return (char1==',' || char1 == ';' );
 	
 }
 
-public boolean isPunctuation(char c) {
-	return (c=='*' || c== '^' || c == ':' || c == '.' || c == '=' || c == '-' || c == '+' || c == '/' );
+public boolean isPunctuation(char char1) {
+	return (char1=='*' || char1== '^' || char1 == ':' || char1 == '.' || char1 == '=' || char1 == '-' || char1 == '+' || char1 == '/' );
 }
 
-public boolean isPairedDelimeter(char c) {
-	return (c=='<' || c=='>' || c=='{' || c=='}' || c=='[' || c==']' || c =='(' || c==')');
+public boolean isPairedDelimeter(char char1) {
+	return (char1=='<' || char1=='>' || char1=='{' || char1=='}' || char1=='[' || char1==']' || char1 =='(' || char1==')');
 }
 
-public boolean isMultiCharOperator(char c1, char c2) {
-	return( (c1 == '-' && c2 == '>') || (c1 == '=' && c2 == '=') || (c1 == '!' && c2 == '=')
-			|| (c1 == '<' && c2 == '=') || (c1 == '>' && c2 == '=') || (c1 == '<' && c2 == '<')
-			|| (c1 == '>' && c2 == '>'));
+public boolean isMultiCharOperator(char char1, char char2) {
+	return( (char1 == '-' && char2 == '>') || (char1 == '=' && char2 == '=') || (char1 == '!' && char2 == '=')
+			|| (char1 == '<' && char2 == '=') || (char1 == '>' && char2 == '=') || (char1 == '<' && char2 == '<')
+			|| (char1 == '>' && char2 == '>'));
 }
 
 public boolean isKeyword(String word) {
@@ -369,29 +365,6 @@ public boolean isKeyword(String word) {
 	 type="";
 	 
  }
- 
- 
-
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-}
+ }
 
 
