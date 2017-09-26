@@ -332,14 +332,20 @@ public boolean isUnpairedDelimeters(char char1) {
 	return (char1==',' || char1 == ';' );
 	
 }
-
-public boolean isPunctuation(char char1) {
-	return (char1=='*' || char1== '^' || char1 == ':' || char1 == '.' || char1 == '=' || char1 == '-' || char1 == '+' || char1 == '/' );
+public boolean isKeyword(String word) {
+	return (word =="prog" ||word == "main"|| word == "fcn" || word == "class" || word == "float" || word == "int" || word == "string"
+			|| word == "if" || word == "elseif" || word == "else" || word =="while" || word =="input"
+			|| word == "input" ||  word == "print" || word =="new"|| word == "return");
 }
 
 public boolean isPairedDelimeter(char char1) {
 	return (char1=='<' || char1=='>' || char1=='{' || char1=='}' || char1=='[' || char1==']' || char1 =='(' || char1==')');
 }
+
+public boolean isPunctuation(char char1) {
+	return (char1=='*' || char1== '^' || char1 == ':' || char1 == '.' || char1 == '=' || char1 == '-' || char1 == '+' || char1 == '/' );
+}
+
 
 public boolean isMultiCharOperator(char char1, char char2) {
 	return( (char1 == '-' && char2 == '>') || (char1 == '=' && char2 == '=') || (char1 == '!' && char2 == '=')
@@ -347,11 +353,6 @@ public boolean isMultiCharOperator(char char1, char char2) {
 			|| (char1 == '>' && char2 == '>'));
 }
 
-public boolean isKeyword(String word) {
-	return (word =="prog" || word == "fcn" || word == "class" || word == "float" || word == "int" || word == "string"
-			|| word == "if" || word == "elseif" || word == "else" || word =="while" || word =="input"
-			|| word == "input" ||  word == "print");
-}
 
 
 
