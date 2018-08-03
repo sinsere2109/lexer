@@ -28,11 +28,18 @@ The user will be prompted to enter the name of a single plain text file to be re
 FUNCTIONS/METHODS
 
 main: 	Tyren/William
+
 Lexer:	Tyren/William
+
 isUnpairedDelimeter:	Tyren
+
 isKeyword:		Tyren
+
 isPairedDelimeter:	Tyren
+
 isPunctuation:	William
+
 isMultiCharOperator:	William
+
 reset:	Tyren
 
